@@ -1,15 +1,36 @@
-// const fs = require('fs/promises')
-// const contacts = require('./contacts.json')
+/* eslint-disable no-unused-vars */
+/* eslint-disable semi */
+/* eslint-disable quotes */
 
-const listContacts = async () => {}
+const fs = require("fs/promises");
+const contacts = require("./contacts.json");
+const path = require("path");
 
-const getContactById = async (contactId) => {}
+const contactsPath = path.resolve(__dirname, "contacts.json");
 
-const removeContact = async (contactId) => {}
+const listContacts = () => contacts;
 
-const addContact = async (body) => {}
+const getContactById = (contactId) => {
+  const data = contacts.find(({ id }) => id === contactId);
+  return data;
+};
 
-const updateContact = async (contactId, body) => {}
+const removeContact = async (contactId) => {
+  const deletedContact = contacts.find(({ id }) => id === contactId);
+  const changedContacts = contacts.filter(({ id }) => id !== deletedContact.id);
+  await fs.writeFile(contactsPath, JSON.stringify(changedContacts, null, 2));
+  return deletedContact;
+};
+
+const addContact = async (body) => {
+  const allContacts = listContacts();
+  const newContact = body;
+  const newContactList = [...allContacts, newContact];
+  await fs.writeFile(contactsPath, JSON.stringify(newContactList, null, 2));
+  return newContact;
+};
+
+const updateContact = async (contactId, body) => {};
 
 module.exports = {
   listContacts,
@@ -17,4 +38,4 @@ module.exports = {
   removeContact,
   addContact,
   updateContact,
-}
+};
