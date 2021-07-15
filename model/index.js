@@ -1,46 +1,86 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable no-unused-vars */
 /* eslint-disable semi */
 /* eslint-disable quotes */
 const fs = require("fs/promises");
 const contacts = require("./contacts.json");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 const contactsPath = path.resolve(__dirname, "contacts.json");
 
-const listContacts = () => contacts;
-
-const getContactById = (contactId) => {
-  const data = contacts.find(({ id }) => id === contactId);
-  return data;
+// *done
+const listContacts = async () => {
+  try {
+    const data = await fs.readFile(contactsPath);
+    const contacts = JSON.parse(data);
+    return contacts;
+  } catch (error) {
+    throw error;
+  }
 };
 
+// *done
+const getContactById = async (contactId) => {
+  try {
+    const contactsList = await listContacts();
+    const foundContact = await contactsList.find(({ id }) => id === contactId);
+    if (!foundContact) {
+      throw new Error("Not found");
+    }
+    return foundContact;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// *done
 const removeContact = async (contactId) => {
-  const deletedContact = contacts.find(({ id }) => id === contactId);
-  // *check
-  if (!deletedContact) {
-    throw new Error(`Contact with id=${contactId} not found`);
+  try {
+    const contactsList = await listContacts();
+    const deletedContact = await contactsList.find(
+      ({ id }) => id === contactId
+    );
+    if (!deletedContact) {
+      throw new Error("Not found");
+    }
+    const changedContacts = contacts.filter(
+      ({ id }) => id !== deletedContact.id
+    );
+    updateContacts(contactsPath, changedContacts);
+  } catch (error) {
+    throw error;
   }
-  const changedContacts = contacts.filter(({ id }) => id !== deletedContact.id);
-  updateContacts(contactsPath, changedContacts);
-  return deletedContact;
 };
 
+// *done
 const addContact = async (body) => {
-  const allContacts = listContacts();
-  const newContact = body;
-  const newContactList = [...allContacts, newContact];
-  updateContacts(contactsPath, newContactList);
-  return newContact;
+  const newContact = { id: uuidv4(), ...body };
+
+  try {
+    const contactsList = await listContacts();
+    const newContactList = [...contactsList, newContact];
+    updateContacts(contactsPath, newContactList);
+    return newContact;
+  } catch (error) {
+    throw error;
+  }
 };
 
+// *done
 const updateContact = async (contactId, body) => {
-  const contactIdx = contacts.findIndex(({ id }) => id === contactId);
-  if (contactIdx === -1) {
-    throw new Error(`Contact with id=${contactId} not found`);
+  try {
+    const contactsList = await listContacts();
+    const contactIdx = contactsList.findIndex(({ id }) => id === contactId);
+    if (contactIdx === -1) {
+      throw new Error("Not found");
+    }
+    contactsList[contactIdx] = { ...contactsList[contactIdx], ...body };
+    updateContacts(contactsPath, contactsList);
+    return contactsList[contactIdx];
+  } catch (error) {
+    throw error;
   }
-  contacts[contactIdx] = { ...contacts[contactIdx], ...body };
-  updateContacts(contactsPath, contacts);
-  return contacts[contactIdx];
 };
 
 async function updateContacts(path, body) {
