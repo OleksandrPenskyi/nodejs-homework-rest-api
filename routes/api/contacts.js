@@ -7,6 +7,7 @@ const {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 } = require("../../model/index");
 const { v4: uuidv4 } = require("uuid");
 
@@ -26,7 +27,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:contactId", async (req, res, next) => {
-  const id = Number(req.params.contactId);
+  const id = checkIdType(req);
 
   try {
     const contact = await getContactById(id);
@@ -34,7 +35,7 @@ router.get("/:contactId", async (req, res, next) => {
       res.status(404).json({
         status: "error",
         code: 404,
-        message: `Product with id=${id} not found`,
+        message: `Contact with id=${id} not found`,
       });
     }
 
@@ -74,10 +75,19 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/:contactId", async (req, res, next) => {
-  const id = Number(req.params.contactId);
+  const id = checkIdType(req);
 
   try {
     const deletedContact = await removeContact(id);
+
+    // todo
+    // if (!deletedContact) {
+    //   res.status(404).json({
+    //     status: "error",
+    //     code: 404,
+    //     message: `Contact with id=${id} not found`,
+    //   });
+    // }
 
     res.status(200).json({
       status: "success",
@@ -93,7 +103,40 @@ router.delete("/:contactId", async (req, res, next) => {
 
 // todo
 router.patch("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  const id = checkIdType(req);
+  const body = req.body;
+
+  try {
+    const editedContact = await updateContact(id, body);
+    if (!editedContact) {
+      res.status(404).json({
+        status: "error",
+        code: 404,
+        message: `Contact with id=${id} not found`,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      data: {
+        editedContact,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
+
+function checkIdType(req) {
+  let id = req.params.contactId;
+  const convrtedId = Number(id);
+  // если после преобразования в число получается NaN, то оставляем начальное значение, не преобразуем.
+  // если число преобразуется без NaN, то преобразуем
+  if (!Number.isNaN(convrtedId)) {
+    id = Number(req.params.contactId);
+  }
+  return id;
+}
 
 module.exports = router;
