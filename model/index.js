@@ -9,7 +9,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const contactsPath = path.resolve(__dirname, "contacts.json");
 
-// *done
 const listContacts = async () => {
   try {
     const data = await fs.readFile(contactsPath);
@@ -20,7 +19,6 @@ const listContacts = async () => {
   }
 };
 
-// *done
 const getContactById = async (contactId) => {
   try {
     const contactsList = await listContacts();
@@ -34,7 +32,6 @@ const getContactById = async (contactId) => {
   }
 };
 
-// *done
 const removeContact = async (contactId) => {
   try {
     const contactsList = await listContacts();
@@ -53,7 +50,6 @@ const removeContact = async (contactId) => {
   }
 };
 
-// *done
 const addContact = async (body) => {
   const newContact = { id: uuidv4(), ...body };
 
@@ -67,7 +63,6 @@ const addContact = async (body) => {
   }
 };
 
-// *done
 const updateContact = async (contactId, body) => {
   try {
     const contactsList = await listContacts();
