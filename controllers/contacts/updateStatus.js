@@ -1,6 +1,6 @@
 const { contactService } = require("../../service");
 
-const update = async (req, res, next) => {
+const updateStatus = async (req, res, next) => {
   const { contactId } = req.params;
   const { body } = req;
 
@@ -9,17 +9,20 @@ const update = async (req, res, next) => {
       res.status(400).json({
         status: "error",
         code: 400,
-        message: "missing fields",
+        message: "missing field favorite",
       });
     }
 
-    const editeContact = await contactService.update(contactId, body);
+    const editContactStatus = await contactService.updateStatusContact(
+      contactId,
+      body
+    );
 
     res.status(200).json({
       status: "success",
-      code: 400,
+      code: 200,
       data: {
-        editeContact,
+        editContactStatus,
       },
     });
   } catch (error) {
@@ -27,4 +30,4 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = update;
+module.exports = updateStatus;

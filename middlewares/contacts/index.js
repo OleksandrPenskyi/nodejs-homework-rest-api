@@ -1,11 +1,11 @@
-/* eslint-disable semi */
-/* eslint-disable quotes */
 const {
   validateAddContact,
   validatePatchContact,
+  validateStatusContact,
 } = require("./validateContacts");
 
 module.exports = {
   validateAddContact,
   validatePatchContact,
+  validateStatusContact,
 };
