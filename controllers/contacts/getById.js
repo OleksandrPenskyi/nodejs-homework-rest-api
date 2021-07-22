@@ -6,6 +6,14 @@ const getById = async (req, res, next) => {
   try {
     const contact = await contactService.getById(contactId);
 
+    if (!contact) {
+      return res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "Not found",
+      });
+    }
+
     res.status(200).json({
       status: "success",
       code: 200,

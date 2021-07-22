@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 const { Contact } = require("../../model");
 
 const getAll = () => {

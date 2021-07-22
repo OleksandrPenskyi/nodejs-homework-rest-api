@@ -5,18 +5,18 @@ const updateStatus = async (req, res, next) => {
   const { body } = req;
 
   try {
-    if (!Object.keys(body).length > 0) {
-      res.status(400).json({
-        status: "error",
-        code: 400,
-        message: "missing field favorite",
-      });
-    }
-
     const editContactStatus = await contactService.updateStatusContact(
       contactId,
       body
     );
+
+    if (!editContactStatus) {
+      return res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "Not found",
+      });
+    }
 
     res.status(200).json({
       status: "success",

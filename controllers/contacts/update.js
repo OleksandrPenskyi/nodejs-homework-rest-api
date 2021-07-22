@@ -5,15 +5,15 @@ const update = async (req, res, next) => {
   const { body } = req;
 
   try {
-    if (!Object.keys(body).length > 0) {
-      res.status(400).json({
+    const editeContact = await contactService.update(contactId, body);
+
+    if (!editeContact) {
+      return res.status(404).json({
         status: "error",
-        code: 400,
-        message: "missing fields",
+        code: 404,
+        message: "Not found",
       });
     }
-
-    const editeContact = await contactService.update(contactId, body);
 
     res.status(200).json({
       status: "success",
