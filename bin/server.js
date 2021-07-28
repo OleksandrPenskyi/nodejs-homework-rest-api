@@ -6,15 +6,12 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const uriDb = process.env.DB_HOST;
 
-mongoose.Promise = global.Promise;
-
 mongoose
   .connect(uriDb, {
-    promiseLibrary: global.Promise,
-    useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true,
     useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(() => {
     app.listen(PORT, function () {
