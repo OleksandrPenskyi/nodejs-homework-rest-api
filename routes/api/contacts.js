@@ -7,7 +7,7 @@ const {
   validateAddContact,
   validatePatchContact,
   validateStatusContact,
-} = require("../../middlewares/contacts");
+} = require("../../middlewares");
 
 router.get("/", ctrl.getAll);
 

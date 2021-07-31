@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
 const { users: ctrl } = require("../../controllers");
+const { validateAuth } = require("../../middlewares");
 
-// const {
-//   validateAddContact,
-//   validatePatchContact,
-// validateStatusContact,
-// } = require("../../middlewares/contacts");
-
-router.post("/", ctrl.register);
+router.post("/signup", validateAuth, ctrl.register);
+router.get("/login", validateAuth, ctrl.login);
 
 // router.get("/:contactId", ctrl.getById);
 
