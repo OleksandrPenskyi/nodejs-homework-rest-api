@@ -2,9 +2,10 @@ const { contactService } = require("../../service");
 
 const remove = async (req, res, next) => {
   const { contactId } = req.params;
+  const userId = req.user.id;
 
   try {
-    const deleteContact = await contactService.remove(contactId);
+    const deleteContact = await contactService.remove(userId, contactId);
 
     if (!deleteContact) {
       return res.status(404).json({

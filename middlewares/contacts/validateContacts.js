@@ -5,6 +5,7 @@ const addContactSchema = Joi.object({
   email: Joi.string().min(5).required(),
   phone: Joi.string().min(3).required(),
   favorite: Joi.boolean().optional(),
+  owner: Joi.string().optional(),
 });
 
 const patchContactSchema = Joi.object({
@@ -20,8 +21,6 @@ const updateStatusContactSchema = Joi.object({
 
 const validateAddContact = (req, res, next) => {
   const { error } = addContactSchema.validate(req.body);
-
-  console.log(error);
 
   if (error) {
     res.status(400).json({

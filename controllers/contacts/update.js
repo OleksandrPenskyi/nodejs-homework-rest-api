@@ -3,9 +3,10 @@ const { contactService } = require("../../service");
 const update = async (req, res, next) => {
   const { contactId } = req.params;
   const { body } = req;
+  const userId = req.user.id;
 
   try {
-    const editeContact = await contactService.update(contactId, body);
+    const editeContact = await contactService.update(userId, contactId, body);
 
     if (!editeContact) {
       return res.status(404).json({

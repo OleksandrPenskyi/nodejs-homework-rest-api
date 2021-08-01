@@ -3,9 +3,11 @@ const { contactService } = require("../../service");
 const updateStatus = async (req, res, next) => {
   const { contactId } = req.params;
   const { body } = req;
+  const userId = req.user.id;
 
   try {
     const editContactStatus = await contactService.updateStatusContact(
+      userId,
       contactId,
       body
     );
