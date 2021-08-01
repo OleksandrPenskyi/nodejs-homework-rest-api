@@ -4,7 +4,7 @@ const {
   validateStatusContact,
 } = require("./contacts");
 
-const { validateAuth } = require("./users");
+const { validateAuth, validateSubscription } = require("./users");
 const jwtAuthorizeCheck = require("./auth");
 
 module.exports = {
@@ -13,4 +13,5 @@ module.exports = {
   validateStatusContact,
   validateAuth,
   jwtAuthorizeCheck,
+  validateSubscription,
 };

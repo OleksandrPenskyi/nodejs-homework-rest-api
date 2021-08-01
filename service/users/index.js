@@ -10,8 +10,8 @@ const addUser = ({ email, password }) => {
   return newUser.save();
 };
 
-const updateById = (id, options) => {
-  return User.findByIdAndUpdate(id, options, { new: true });
+const updateById = (id, body) => {
+  return User.findByIdAndUpdate(id, body, { new: true });
 };
 
 const getUserById = (id) => {

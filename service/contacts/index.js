@@ -1,7 +1,7 @@
 const { Contact } = require("../../model");
 
-const getAll = (userId) => {
-  const searchQuery = { owner: userId };
+const getAll = (userId, query) => {
+  const searchQuery = { owner: userId, ...query };
   return Contact.find(searchQuery).populate("owner");
 };
 

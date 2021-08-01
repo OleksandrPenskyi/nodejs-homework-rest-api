@@ -5,6 +5,10 @@ const registerLoginSchema = Joi.object({
   password: Joi.string().min(5).required(),
 });
 
+const patchSubscriptionSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
+});
+
 const validateAuth = (req, res, next) => {
   const { error } = registerLoginSchema.validate(req.body);
 
@@ -20,6 +24,22 @@ const validateAuth = (req, res, next) => {
   next();
 };
 
+const validateSubscription = (req, res, next) => {
+  const { error } = patchSubscriptionSchema.validate(req.body);
+
+  if (error) {
+    res.status(400).json({
+      status: "error",
+      code: 400,
+      message: `field ${error.message.replace(/"/g, "")}`,
+    });
+    return;
+  }
+
+  next();
+};
+
 module.exports = {
   validateAuth,
+  validateSubscription,
 };
