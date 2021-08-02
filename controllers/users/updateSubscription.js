@@ -6,9 +6,6 @@ const updateSubscription = async (req, res, next) => {
 
   try {
     const user = await userService.updateById(userId, body);
-    console.log("====================================");
-    console.log(user);
-    console.log("====================================");
 
     if (!user) {
       return res.status(404).json({

@@ -10,8 +10,6 @@ const {
   jwtAuthorizeCheck,
 } = require("../../middlewares");
 
-// router.get(":?", jwtAuthorizeCheck, ctrl.searchFavorite);
-
 router.get("/", jwtAuthorizeCheck, ctrl.getAll);
 router.get("/:contactId", jwtAuthorizeCheck, ctrl.getById);
 router.post("/", jwtAuthorizeCheck, validateAddContact, ctrl.add);
@@ -28,7 +26,5 @@ router.patch(
   validateStatusContact,
   ctrl.updateStatus
 );
-
-// Сделать фильтрацию контактов по полю избранного(GET / contacts ? favorite = true)
 
 module.exports = router;

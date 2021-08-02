@@ -2,12 +2,12 @@ const { Contact } = require("../../model");
 
 const getAll = (userId, query) => {
   const searchQuery = { owner: userId, ...query };
-  return Contact.find(searchQuery).populate("owner");
+  return Contact.find(searchQuery).populate("owner", "email");
 };
 
 const getById = async (userId, contactId) => {
   const searchQuery = { owner: userId, _id: contactId };
-  return Contact.findOne(searchQuery).populate("owner");
+  return Contact.findOne(searchQuery).populate("owner", "email");
 };
 
 const add = (userId, body) => {
