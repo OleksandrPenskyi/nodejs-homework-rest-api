@@ -1,5 +1,6 @@
-const { Contact } = require("./schemas");
+const { Contact, User } = require("./schemas");
 
 module.exports = {
   Contact,
+  User,
 };

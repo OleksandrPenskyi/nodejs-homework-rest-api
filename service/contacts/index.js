@@ -1,27 +1,33 @@
 const { Contact } = require("../../model");
 
-const getAll = () => {
-  return Contact.find();
+const getAll = (userId, query) => {
+  const searchQuery = { owner: userId, ...query };
+  return Contact.find(searchQuery).populate("owner", "email");
 };
 
-const getById = (contactId) => {
-  return Contact.findOne({ _id: contactId });
+const getById = async (userId, contactId) => {
+  const searchQuery = { owner: userId, _id: contactId };
+  return Contact.findOne(searchQuery).populate("owner", "email");
 };
 
-const add = (body) => {
-  return Contact.create(body);
+const add = (userId, body) => {
+  const createContact = { ...body, owner: userId };
+  return Contact.create(createContact);
 };
 
-const remove = (contactId) => {
-  return Contact.findByIdAndRemove({ _id: contactId });
+const remove = async (userId, contactId) => {
+  const searchQuery = { owner: userId, _id: contactId };
+  return Contact.findOneAndRemove(searchQuery);
 };
 
-const update = (contactId, body) => {
-  return Contact.findByIdAndUpdate({ _id: contactId }, body, { new: true });
+const update = (userId, contactId, body) => {
+  const searchQuery = { owner: userId, _id: contactId };
+  return Contact.findOneAndUpdate(searchQuery, body, { new: true });
 };
 
-const updateStatusContact = (contactId, body) => {
-  return Contact.findByIdAndUpdate({ _id: contactId }, body, {
+const updateStatusContact = (userId, contactId, body) => {
+  const searchQuery = { owner: userId, _id: contactId };
+  return Contact.findByIdAndUpdate(searchQuery, body, {
     new: true,
   });
 };

@@ -1,15 +1,11 @@
 const { contactService } = require("../../service");
 
 const add = async (req, res, next) => {
-  const { name, email, phone } = req.body;
-  const body = {
-    name,
-    email,
-    phone,
-  };
+  const userId = req.user.id;
+  const body = req.body;
 
   try {
-    const newContact = await contactService.add(body);
+    const newContact = await contactService.add(userId, body);
 
     res.status(201).json({
       status: "success",

@@ -1,13 +1,13 @@
-const { contactService } = require("../../service");
+const { userService } = require("../../service");
 
-const getById = async (req, res, next) => {
-  const { contactId } = req.params;
+const updateSubscription = async (req, res, next) => {
   const userId = req.user.id;
+  const { body } = req;
 
   try {
-    const contact = await contactService.getById(userId, contactId);
+    const user = await userService.updateById(userId, body);
 
-    if (!contact) {
+    if (!user) {
       return res.status(404).json({
         status: "error",
         code: 404,
@@ -19,7 +19,7 @@ const getById = async (req, res, next) => {
       status: "success",
       code: 200,
       data: {
-        contact,
+        user,
       },
     });
   } catch (error) {
@@ -27,4 +27,4 @@ const getById = async (req, res, next) => {
   }
 };
 
-module.exports = getById;
+module.exports = updateSubscription;
