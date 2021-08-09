@@ -4,8 +4,8 @@ const getOneUser = (email) => {
   return User.findOne(email);
 };
 
-const addUser = ({ email, password }) => {
-  const newUser = new User({ email });
+const addUser = ({ email, password, avatarURL }) => {
+  const newUser = new User({ email, avatarURL });
   newUser.setPassword(password);
   return newUser.save();
 };

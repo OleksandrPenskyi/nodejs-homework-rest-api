@@ -4,8 +4,13 @@ const {
   validateStatusContact,
 } = require("./contacts");
 
-const { validateAuth, validateSubscription } = require("./users");
+const {
+  validateAuth,
+  validateSubscription,
+  validatePatchAvatar,
+} = require("./users");
 const jwtAuthorizeCheck = require("./auth");
+const uploadPictures = require("./uploadPictures");
 
 module.exports = {
   validateAddContact,
@@ -14,4 +19,6 @@ module.exports = {
   validateAuth,
   jwtAuthorizeCheck,
   validateSubscription,
+  validatePatchAvatar,
+  uploadPictures,
 };
