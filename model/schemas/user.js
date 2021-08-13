@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { boolean } = require("joi");
 
 const userSchema = new Schema(
   {
@@ -21,7 +22,18 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+
     avatarURL: String,
+
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+
+    verifyToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: false }
 );

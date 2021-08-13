@@ -16,6 +16,14 @@ const login = async (req, res, next) => {
       });
     }
 
+    if (!user.verify) {
+      return res.status(403).json({
+        status: "error",
+        code: 403,
+        message: `The user: ${user.email} is not verified!`,
+      });
+    }
+
     const { SECRET_KEY } = process.env;
     const payload = {
       id: user._id,

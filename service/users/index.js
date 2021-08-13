@@ -1,11 +1,11 @@
 const { User } = require("../../model");
 
-const getOneUser = (email) => {
-  return User.findOne(email);
+const getOneUser = (value) => {
+  return User.findOne(value);
 };
 
-const addUser = ({ email, password, avatarURL }) => {
-  const newUser = new User({ email, avatarURL });
+const addUser = ({ email, password, avatarURL, verifyToken }) => {
+  const newUser = new User({ email, avatarURL, verifyToken });
   newUser.setPassword(password);
   return newUser.save();
 };
