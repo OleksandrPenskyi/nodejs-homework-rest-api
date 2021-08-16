@@ -8,6 +8,7 @@ const {
   validateAuth,
   validateSubscription,
   validatePatchAvatar,
+  getRepeatVerify,
 } = require("./users");
 const jwtAuthorizeCheck = require("./auth");
 const uploadPictures = require("./uploadPictures");
@@ -21,4 +22,5 @@ module.exports = {
   validateSubscription,
   validatePatchAvatar,
   uploadPictures,
+  getRepeatVerify,
 };
